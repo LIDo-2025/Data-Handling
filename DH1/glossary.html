@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="../assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/android-chrome-512x512.png">
+    
+    <!-- Core Stylesheets -->
+    <link rel="stylesheet" href=../assets/colours-l2d.css>
+    <link rel="stylesheet" href="../assets/shared-styles.css">
+    <link rel="stylesheet" href="../assets/module_card.css">
+    
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L2D - DH1 - Glossary</title>
+    
+    <style>
+        /* Override sidebar styling since we're not using it */
+        body {
+            background-color: var(--background) !important;
+            color: var(--text-primary);
+            margin: 0 !important;
+            padding: 0 !important;
+            min-height: 100vh;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: flex-start !important;
+            flex-direction: column !important;
+        }
+
+        .main-content {
+            width: 100% !important;
+            max-width: 1200px !important;
+            padding: 0 20px !important;
+            box-sizing: border-box !important;
+            margin: 0 auto !important;
+            position: relative !important;
+            left: auto !important;
+            right: auto !important;
+            transform: none !important;
+        }
+
+        /* Additional centering overrides */
+        #main-content {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            text-align: left !important;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo-container img {
+            width: clamp(60px, 10vw, 120px);
+            height: clamp(60px, 10vw, 120px);
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glossary-entry {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .glossary-entry:last-child {
+            border-bottom: none;
+        }
+
+        .glossary-term {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--remember);
+            margin-bottom: 8px;
+        }
+
+        .glossary-definition {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .logo-container img {
+                height: 60px;
+            }
+            
+            .glossary-term {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main-content" class="main-content">
+        <div class="top-navbar">
+            <div class="logo-container">
+                <h1 class="page-title">Data Handling 1 - Glossary</h1>
+            </div>
+        </div>
+
+        <div class="module-card">
+            <div class="module-header">
+                Glossary <span class="module-tag">DH1</span>
+            </div>
+            <div class="module-body">
+                
+                <div class="glossary-entry">
+                    <strong>pandas</strong>: Pandas is a Python library. Pandas is used to store, manipulate and analyse data inside its proprietary DataFrame, a tabular data structure akin to a spreadsheet.
+                </div>
+                <div class="glossary-entry">
+                    <strong>DataFrame</strong>: A 2-dimensional labeled data structure with columns of potentially different types. You can think of it like a spreadsheet or SQL table. It is the core data structure in Pandas.
+                </div>
+                <div class="glossary-entry">
+                    <strong>CSV (Comma-Separated Values)</strong>: A file format that stores tabular data in plain text, where each line represents a row and values are separated by commas. Commonly used for data exchange and can be read with `read_csv()`.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Index</strong>: The labels on the left side of a DataFrame that identify rows. By default, this is sequential integers starting from 0, but can be customised to use any labels.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Columns</strong>: The labels across the top of a DataFrame that serve as headers for each column. They form part of the DataFrame&#x27;s metadata.
+                </div>
+                <div class="glossary-entry">
+                    <strong>shape</strong>: A DataFrame property that returns a tuple containing the number of rows and columns (rows, columns).
+                </div>
+                <div class="glossary-entry">
+                    <strong>dtypes</strong>: A DataFrame property that shows the data type of each column (e.g., int64, float64, object).
+                </div>
+                <div class="glossary-entry">
+                    <strong>.iloc</strong>: (deprecated) Integer position-based indexing method that uses numerical index positions. As of Pandas 2.2.0, `.loc` is preferred.
+                </div>
+                <div class="glossary-entry">
+                    <strong>NaN (Not a Number)</strong>: Python&#x27;s standard way of representing missing or null values in data. Common in real-world datasets.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Series</strong>: A one-dimensional labeled array in Pandas. When you select a single column from a DataFrame or apply methods like `.mean()`, you get a Series.
+                </div>
+                <div class="glossary-entry">
+                    <strong>drop()</strong>: A DataFrame method used to remove rows or columns. Use `columns=` parameter to specify columns to drop and `inplace=True` to modify the DataFrame directly.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Filtering</strong>: The process of selecting rows from a DataFrame that meet specific conditions using boolean expressions (e.g., `df[df[&#x27;column&#x27;] &gt; 10]`).
+                </div>
+                <div class="glossary-entry">
+                    <strong>Boolean indexing</strong>: Using True/False conditions to filter DataFrame rows. The condition returns a boolean Series that acts as a mask.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Matplotlib</strong>: A comprehensive library for creating static, animated, and interactive visualisations in Python. Used extensively for data visualisation.
+                </div>
+                <div class="glossary-entry">
+                    <strong>fig</strong>: The overall figure object in Matplotlib that contains all plot elements. Used for figure-level settings like `suptitle()` and `tight_layout()`.
+                </div>
+                <div class="glossary-entry">
+                    <strong>ax</strong>: The axes object in Matplotlib representing a single plot or coordinate system where data is plotted.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Boxplot</strong>: A visualisation that displays the distribution of data through quartiles, showing median, 25th/75th percentiles, and outliers.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Histogram</strong>: A plot that shows the frequency distribution of data by dividing the range into bins and counting values in each bin.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Bins</strong>: The containers or intervals used in a histogram to group data values. The number of bins affects the granularity of the distribution display.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Alias</strong>: A shorthand name for an imported library (e.g., `import pandas as pd`), making it easier to reference in code.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Property</strong>: An attribute of an object that doesn&#x27;t require parentheses to access (e.g., `df.shape`, `df.columns`), as opposed to methods which do.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Method</strong>: A function that belongs to an object and is called with parentheses (e.g., `df.head()`, `df.describe()`).
+                </div>
+                <div class="glossary-entry">
+                    <strong>Metadata</strong>: Data about the DataFrame structure (index, column names) that is not part of the actual data values.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Univariate analysis</strong>: Analysis of a single variable/column independently, examining its distribution and characteristics.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Bivariate analysis</strong>: Analysis examining the relationship between two variables/columns.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Outliers</strong>: Data points that differ significantly from other observations, often visible in boxplots as points beyond the whiskers.
+                </div>
+                <div class="glossary-entry">
+                    <strong>NumPy</strong>: A fundamental Python library for numerical computing that provides support for arrays and mathematical operations. Pandas is built on top of NumPy.
+                </div>
+                <div class="glossary-entry">
+                    <strong>Relative path</strong>: A file path specified relative to the current working directory (e.g., `./data/file.csv`).
+                </div>
+                <div class="glossary-entry">
+                    <strong>Absolute path</strong>: A complete file path from the root directory (e.g., `/Users/username/data/file.csv`).
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div>© Built with parchmentIQ copyright of scryptIQ</div>
+            <div>© L2D is copyright UCL 2025</div>
+        </div>
+    </div>
+</body>
+</html>
+        
