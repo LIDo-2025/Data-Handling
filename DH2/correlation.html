@@ -422,9 +422,7 @@ show()</textarea>
                         <p>To analyse the correlations in a dataset, we are only interested in the <strong>N x (N-1)/2</strong> unduplicated correlation coefficients. Here is a way to extract them and assign them to a variable.<br><br>Firstly, we must import the function <code>triu_indices</code>. It provides the indices of a matrix with specified size. The required size is obtained from our correlation matrix, using <code>len</code>. It is identical to the number of columns for which we calculated the <strong>CCs</strong>.<br><br>We also need to specify that we do not want the diagonal to be included. For this, there is an offset parameter &#x27;k&#x27;, which collects the indices excluding the diagonal, provided it is set to 1. (To include the indices of the diagonal, it would have to be set to 0).</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-27"># FIXED WITH NO OUTPUT
-
-from numpy import triu_indices</textarea>
+                <textarea id="code-cell-27">from numpy import triu_indices</textarea>
             </div>
             <div id="code-cell-27-output" class="output" style="display: none;"></div>
         </div>
