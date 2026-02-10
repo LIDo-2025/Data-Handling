@@ -175,6 +175,7 @@ data_diabetes = diabetes.data</textarea>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-40">data_corr_matrix = corrcoef(data_diabetes, rowvar=False)
+labels = diabetes.feature_names
 
 fill_diagonal(data_corr_matrix, 0)
 
@@ -183,6 +184,12 @@ fig, ax = subplots(figsize=(8, 8))
 im = ax.imshow(data_corr_matrix, cmap=&#x27;coolwarm&#x27;);
 
 fig.colorbar(im, orientation=&#x27;horizontal&#x27;, shrink=0.5);
+
+# Add labels to both axes
+ax.set_xticks(range(len(labels)))
+ax.set_xticklabels(labels, rotation=45, ha=&#x27;right&#x27;) 
+ax.set_yticks(range(len(labels)))
+ax.set_yticklabels(labels);
 
 show()</textarea>
             </div>

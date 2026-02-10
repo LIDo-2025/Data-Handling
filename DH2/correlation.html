@@ -354,7 +354,7 @@ patients_corr = corrcoef(patients_numpy_float, rowvar=False)</textarea>
                 <textarea id="code-cell-23"># Select and ensure is float
 patients_numpy_float = patients_numpy[:, :cols].astype(float)</textarea>
             </div>
-            <div id="code-cell-23-output" class="output"></div>
+            <div id="code-cell-23-output" class="output" style="display: none;"></div>
         </div>
         
         <div class="code-area">
@@ -374,7 +374,7 @@ patients_corr</textarea>
                 <div class="module-body">
                     <div class="module-section">
                         <h3>Heatmaps</h3>
-                        <p>To get an illustration of the correlation pattern in a dataset, we can plot the correlation matrix as a heatmap.<br><br>Below are three lines of code, that make use of functionality within <code>Matplotlib</code>, to plot a heatmap of the correlation matrix from the &#x27;patients&#x27; dataset. We make use of the function <code>imshow</code>:</p>
+                        <p>To get an illustration of the correlation pattern in a dataset, we can plot the correlation matrix as a heatmap.<br><br>Below are three lines of code, that make use of <code>imshow</code> within <code>Matplotlib</code>, to plot a heatmap of the correlation matrix from the &#x27;patients&#x27; dataset:</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-25">fig, ax = subplots(figsize=(5,5))
@@ -395,7 +395,7 @@ show()</textarea>
                 <p>We have specified the colour map <code>coolwarm</code>, using the keyword argument <code>cmap</code>. For a list of <code>Matplotlib</code> colour maps, please refer to the <a href="https://matplotlib.org/stable/gallery/color/colormap_reference.htmll">gallery in the documentation</a>. The names to use in the code are on the left hand side of the colour bar.</p>
             </div>
         </div>
-        <p>Let us add two more features to improve this figure.<br><br>Firstly, in order to highlight true correlations stand out (rather than the trivial self-correlations along the diagonal, which are always equal to 1) we can deliberately set the diagonal as being equal to 0. To achieve this, we use the NumPy function <code>fill_diagonal</code>.<br><br>Secondly, the <code>imshow</code> function, by default, will scale the colours to the minimum and maximum values present in the array. As such, we do not know what red or blue means. To see the colour bar, it can be added to the figure environment &#x27;fig&#x27; using <code>colorbar</code>.</p>
+        <p>Let us add <strong>three</strong> more features to improve this figure.<br><br>Firstly, in order to highlight true correlations stand out (rather than the trivial self-correlations along the diagonal, which are always equal to 1) we can deliberately set the diagonal as being equal to 0. To achieve this, we use the NumPy function <code>fill_diagonal</code>.<br><br>Secondly, the <code>imshow</code> function, by default, will scale the colours to the minimum and maximum values present in the array. As such, we do not know what red or blue means. To see the colour bar, it can be added to the figure environment &#x27;fig&#x27; using <code>colorbar</code>.<br><br>Lastly, we can add labels to the axes according to the columns from our <em>DataFrame</em>.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-26">from numpy import fill_diagonal</textarea>
@@ -407,11 +407,22 @@ show()</textarea>
             <div class="code-container code-fixed">
                 <textarea id="code-cell-27">fill_diagonal(patients_corr, 0) # this works in place
 
+# Get labels for first 5 columns
+labels = df.columns.tolist()[:cols]
+
 fig, ax = subplots(figsize=(7,7))
 
 im = ax.imshow(patients_corr, cmap=&#x27;coolwarm&#x27;);
 
+# Add colour bar and reduce its size
 fig.colorbar(im, orientation=&#x27;horizontal&#x27;, shrink=0.7);
+
+# Add labels to both axes
+ax.set_xticks(range(len(labels)))
+# We can change their orientation to fit better
+ax.set_xticklabels(labels, rotation=45, ha=&#x27;right&#x27;) 
+ax.set_yticks(range(len(labels)))
+ax.set_yticklabels(labels);
 
 show()</textarea>
             </div>
@@ -485,6 +496,9 @@ bins = arange(len(corr_coeffs))
 
 ax.bar(bins, corr_coeffs)
 
+# Add index labels
+ax.set_xticks(range(len(bins)))
+
 show()</textarea>
             </div>
             <div id="code-cell-31-output" class="output"></div>
@@ -524,6 +538,10 @@ corr_column_average</textarea>
 bins = arange(corr_column_average.shape[0])
 
 ax.bar(bins, corr_column_average );
+
+# Add labels
+ax.set_xticks(range(len(labels)))
+ax.set_xticklabels(labels, rotation=45, ha=&#x27;right&#x27;) 
 
 show()</textarea>
             </div>
