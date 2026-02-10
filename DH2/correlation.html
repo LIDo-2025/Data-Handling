@@ -52,7 +52,7 @@
             {url: "https://raw.githubusercontent.com/ScryptIQ-ai/lesson-data/refs/heads/main/dh/everleys_data.csv", filename: "everleys_data.csv", is_binary: false},
             {url: "https://raw.githubusercontent.com/ScryptIQ-ai/lesson-data/refs/heads/main/dh/patients.csv", filename: "patients.csv", is_binary: false}
         ];
-        window.LESSON_PACKAGES = ['pandas', 'matplotlib'];
+        window.LESSON_PACKAGES = ['pandas', 'matplotlib', 'scipy'];
     </script>
         
 </head>
@@ -152,7 +152,7 @@
                 <div class="module-body">
                     <div class="module-section">
                         <h3>The Correlation Coefficient</h3>
-                        <p>Here we are going to look at a specific bivariate quantity: the <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Pearson correlation coefficient</a> <em>PCC</em>.<br><br>The formula for the <em>PCC</em> is set up such that two identical datasets yield a <em>PCC</em> of 1. Technically, this is achieved by normalising all variances to be equal to 1. This also implies that all data points in a scatter plot of one variable plotted against itself are aligned along the main diagonal (with a positive slope).<br><br>In two perfectly antisymmetrical datasets, where one variable can be obtained by multiplying the other by -1, a value of -1 is obtained. This implies that all data points in a scatter plot are aligned along the negative, or anti diagonal, (with a negative slope). All other possibilities lie in between. A value of 0 refers to precisely balanced positive and negative contributions to the measure. However - strictly speaking - the latter does not necessarily indicate that there is no relationship between the variables.<br><br>The PCC is an <strong>undirected</strong> measure. This means that its value for the comparison between dataset 1 and dataset 2 is exactly the same as the <em>PCC</em> between dataset 2 and dataset 1.</p>
+                        <p>Here we are going to look at a specific bivariate quantity: the <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Pearson correlation coefficient</a> ($PCC$).<br><br>The formula for the $PCC$ is set up such that two identical datasets yield a $PCC$ of 1. Technically, this is achieved by normalising all variances to be equal to 1. This also implies that all data points in a scatter plot of one variable plotted against itself are aligned along the main diagonal (with a positive slope).<br><br>In two perfectly anti-symmetrical datasets, where one variable can be obtained by multiplying the other by -1, a value of -1 is obtained. This implies that all data points in a scatter plot are aligned along the negative, or anti diagonal, (with a negative slope). All other possibilities lie in between. A value of 0 refers to precisely balanced positive and negative contributions to the measure. However - strictly speaking - the latter does not necessarily indicate that there is no relationship between the variables.<br><br>The $PCC$ is an <strong>undirected</strong> measure. This means that its value for the comparison between dataset 1 and dataset 2 is exactly the same as the $PCC$ between dataset 2 and dataset 1.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-9"># First, lets load in the functions for this section
@@ -165,27 +165,28 @@ from numpy import arange, isnan</textarea>
             </div>
             <div id="code-cell-9-output" class="output" style="display: none;"></div>
         </div>
-        <p>A method to directly calculate the <em>PCC</em> of your data, is to use the method <code>.corr()</code> with your DataFrame. For instance, we can apply it to the Everleys dataset:</p>
+        <p>A method to directly calculate the $PCC$ of your data, is to use the method <code>.corr()</code> with your DataFrame. For instance, we can apply it to the Everleys dataset:</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-10"># Load in our dataset
 df_everley = read_csv(&#x27;./data/everleys_data.csv&#x27;)
+
 # Use the method .corr()
-df_everley.corr()</textarea>
+print(df_everley.corr())</textarea>
             </div>
-            <div id="code-cell-10-output" class="output" style="display: none;"></div>
+            <div id="code-cell-10-output" class="output"></div>
         </div>
-        <p>The result as a matrix of two-by-two numbers. Along the diagonal (top left and bottom right) are the values for the comparison of a column to itself. As any dataset is identical with itself, the values are one by definition.<br><br>The non-diagonal elements indicate that <strong>CC is approx. -0.26</strong> for the two datasets. Both <strong>CC(calcium-sodium)</strong> and <strong>CC(sodium-calcium)</strong> are given in the matrix, however because of the symmetry, we would only need to report one out of the two.</p>
+        <p>The result as a matrix of two-by-two numbers. Along the diagonal (top left and bottom right) are the values for the comparison of a column to itself. As any dataset is identical with itself, the values are one by definition.<br><br>The non-diagonal elements indicate that <strong>CC is approx. -0.26</strong> for the two datasets. Both <strong>CC (calcium-sodium)</strong> and <strong>CC (sodium-calcium)</strong> are given in the matrix, however because of the symmetry, we would only need to report one out of the two.</p>
         <div class="info-box note-box">
             <div class="box-title">
                 <span class="box-icon"></span>
                 NOTE
             </div>
             <div class="box-content">
-                <p>In this lesson we introduce how to calculate the <em>PCC</em> but do not discuss its significance. For example, interpreting the value above requires consideration of the fact that we only have only 18 data points. Specifically, we refrain from concluding that because the $PCC$ is negative, a high value for the calcium concentration is associated with a small value for sodium concentration (relative to their respective means).<br><br>One quantitative way to assess whether or not a given value of the $PCC$ is meaningful or not, is to use surrogate data. In our example, we could create random numbers in an array with shape (18, 2), for instance - such that the two means and standard deviations are the same as in the Everley dataset, but the two columns are independent of each other. Creating many realisations, we can check what distribution of $PCC$ values is expected from the randomly generated data, and compare this against the values obtained from the Everleys dataset.</p>
+                <p>In this lesson we introduce how to calculate the $PCC$ but do not discuss its significance. For example, interpreting the value above requires consideration of the fact that we only have only 18 data points. Specifically, we refrain from concluding that because the $PCC$ is negative, a high value for the calcium concentration is associated with a small value for sodium concentration (relative to their respective means).<br><br>One quantitative way to assess whether or not a given value of the $PCC$ is meaningful or not, is to use surrogate data. In our example, we could create random numbers in an array with shape (18, 2), for instance - such that the two means and standard deviations are the same as in the Everley dataset, but the two columns are independent of each other. Creating many realisations, we can check what distribution of $PCC$ values is expected from the randomly generated data, and compare this against the values obtained from the Everleys dataset.</p>
             </div>
         </div>
-        <p>Much of what we will cover in the Machine Learning component of L2D will involve NumPy arrays. Let us, therefore, convert the Everleys dataset from a Pandas DataFrame into a NumPy array.<br><br>A <a href="https://numpy.org/doc/2.2/user/whatisnumpy.html">NumPy array</a> is a data structure much like a list, however it is built for mathematical operations. Typical analytical tasks such as sorting, selecting, linear algebra, statistics, ect. are all much quicker than using a list. Additionally, these operations can be applied easily to the whole structure or <strong>array</strong> without having to loop over every <strong>item</strong> in term.</p>
+        <p>Much of what we will cover in the Machine Learning component of L2D will involve NumPy arrays. Let us, therefore, convert the Everleys dataset from a Pandas DataFrame into a NumPy array.<br><br>A <a href="https://numpy.org/doc/2.2/user/whatisnumpy.html">NumPy array</a> is a data structure much like a list, however it is built for mathematical operations. Typical analytical tasks such as sorting, selecting, linear algebra, statistics, ect. are all much quicker than using a list. Additionally, these operations can be applied easily to the whole structure or <strong>array</strong> without having to loop over every <strong>item</strong> in term through a backend process of <strong>vectorisation</strong>.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-11"># Pandas Dataframes can be easily converted to numpy arrays
@@ -195,14 +196,14 @@ everley_numpy</textarea>
             </div>
             <div id="code-cell-11-output" class="output"></div>
         </div>
-        <p>We can see that the numbers remain the same, but the format has changed; we have lost the names of the columns. Similar to a Pandas DataFrame, we can also make use of the <code>shape</code> function to see the dimensions of the data array.</p>
+        <p>We can see that the numbers remain the same, but the format has changed; we have lost the names of the columns. Similar to a Pandas DataFrame, we can also make use of the <code>shape</code> <em>attribute</em> to see the dimensions of the data array.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-12">everley_numpy.shape</textarea>
             </div>
             <div id="code-cell-12-output" class="output"></div>
         </div>
-        <p>We can now use the NumPy function <code>corrcoef</code> to calculate the Pearson correlation.</p><p>The function <code>corrcoef</code> takes a two-dimensional array as its input. The keyword argument <code>rowvar</code> is True by default, which means that the correlation will be calculated along the rows of the dataset. As we have the data features contained in the columns, the value of <code>rowvar</code> needs to be set to False. (You can check what happens if you set it to &#x27;True&#x27;. Instead of a 2x2 matrix for two columns you will get a 18x18 matrix for eighteen pair comparisons.)<br><br>We mentioned that the values of the $PCC$ are calculated such that they must lie between -1 and 1. This is achieved by normalisation with the variance. If, for any reason, we don&#x27;t want the similarity calculated using this normalisation, what results is the so-called <strong>covariance</strong>. In contrast to the $PCC$, its values will depend on the absolute size of the numbers in the data array. From the NumPy library, we can use the function <code>cov</code> in order to calculate the covariance:</p>
+        <p>We can now use the NumPy function <code>corrcoef</code> to calculate the Pearson correlation.</p><p>The function <code>corrcoef</code> takes a two-dimensional array as its input. The keyword argument <code>rowvar</code> is True by default, which means that the correlation will be calculated along the rows of the dataset. As we have the data features contained in the columns, the value of <code>rowvar</code> needs to be set to False. (You can check what happens if you set it to &#x27;True&#x27;. Instead of a 2x2 matrix for two columns you will get a 18x18 matrix for eighteen pair comparisons.)</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-13">from numpy import corrcoef</textarea>
@@ -221,22 +222,29 @@ corr_matrix</textarea>
         <p>However, the NumPy version of <code>corrcoef</code> doesn&#x27;t like <code>NaN</code> values on the array. We therefore need to remove them first, repeating what we learned in <strong>PF1</strong>.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-15">replacement_values = {&quot;calcium&quot; : 0, &quot;sodium&quot; : 0}
+                <textarea id="code-cell-15"># Dictionary of replacement values
+replacement_values = {&quot;calcium&quot; : 0, &quot;sodium&quot; : 0}
+
+# Use .fillna()
 df_everley = df_everley.fillna(value = replacement_values)
-everley_numpy = df_everley.to_numpy()</textarea>
+
+# Convert to numpy
+everley_numpy = df_everley.to_numpy()
+
+print(everley_numpy)</textarea>
             </div>
-            <div id="code-cell-15-output" class="output" style="display: none;"></div>
+            <div id="code-cell-15-output" class="output"></div>
         </div>
         
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-16">corr_matrix = corrcoef(everley_numpy, rowvar=False)
 
-corr_matrix</textarea>
+print(corr_matrix)</textarea>
             </div>
             <div id="code-cell-16-output" class="output"></div>
         </div>
-        <p>The function <code>corrcoef</code> takes a two-dimensional array as its input. The keyword argument <code>rowvar</code> is True by default, which means that the correlation will be calculated along the rows of the dataset. As we have the data features contained in the columns, the value of <code>rowvar</code> needs to be set to False.</p><p>We mentioned that the values of the <strong>PCC</strong> are calculated such that they must lie between -1 and 1. This is achieved by normalisation with the variance. If, for any reason, we don&#x27;t want the similarity calculated using this normalisation, what results is the so-called <strong>covariance</strong>. In contrast to the <strong>PCC</strong>, its values will depend on the absolute size of the numbers in the data array. From the NumPy library, we can use the function <code>cov</code> in order to calculate the covariance:</p>
+        <p>We mentioned that the values of the $PCC$ are calculated such that they must lie between -1 and 1. This is achieved by normalisation with the variance. If we don&#x27;t want the similarity calculated using this normalisation, what we would get is the <strong>covariance</strong>. In contrast to the $PCC$, its values will depend on the absolute size of the numbers in the data array.<br><br>From the NumPy library, we can use the function <code>cov</code> in order to calculate the covariance:</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-17">from numpy import cov</textarea>
@@ -252,7 +260,7 @@ cov_matrix</textarea>
             </div>
             <div id="code-cell-18-output" class="output"></div>
         </div>
-        <p>The result shows how covariance is strongly dependent on the actual numerical values in a data column. The two values along the diagonal are identical with the variances obtained by squaring the standard deviation (calculated, for example, using the <code>describe</code> function).</p>
+        <p>The result shows how covariance is strongly dependent on the actual numerical values in a data column.<br><br>The two values along the diagonal are identical with the variances obtained by squaring the standard deviation (calculated, for example, using the <code>describe</code> function).</p>
                     </div>
                 </div>
             </div>
@@ -299,7 +307,7 @@ cov_matrix</textarea>
                 allowfullscreen>
             </iframe>
         </div>
-        <p>If we have more than two columns of data, we can obtain a Pearson correlation coefficient for each pair. In general, for N columns, we get N-squared pairwise values. We will omit the correlations of each column relative to itself, of which there are <strong>N</strong>, which means we are left with <strong>N x (N-1)</strong> pairs. Since each value appears twice, due to the symmetry of the calculation, we can ignore half of them, leaving us with <strong>N x (N-1) / 2</strong> coefficients for <strong>N</strong> columns.</p><p>Here is an example using the &#x27;patients&#x27; data:</p>
+        <p>If we have more than two columns of data, we can obtain a Pearson correlation coefficient for each pair. In general, for $N$ columns, we get N-squared pairwise values. We will omit the correlations of each column relative to itself, of which there are $N$, which means we are left with $N * (N-1)$ pairs. Since each value appears twice, due to the symmetry of the calculation, we can ignore half of them, leaving us with $N * (N-1) / 2$ coefficients for $N$ columns.</p><p>Here is an example using the &#x27;patients&#x27; data:</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-20">df = read_csv(&#x27;./data/patients.csv&#x27;)
@@ -317,21 +325,47 @@ patients_numpy.shape</textarea>
             </div>
             <div id="code-cell-21-output" class="output"></div>
         </div>
-        <p>Next, we can try to calculate the correlation matrix for the first five columns (dropping smoker) of this data array. If we do this directly to the array, we get an:<br><pre class="markdown-code-block"><code>AttributeError: &#x27;float&#x27; object has no attribute &#x27;shape&#x27;</code></pre><br><br>This is amended by converting the array to a floating point prior to using the <code>corrcoef</code> function. For this, we can convert the data type using the method <code>astype(float)</code>:</p>
+        <p>Next, we can try to calculate the correlation matrix for the first five columns (dropping smoker) of this data array.<br><br>This sub-selected numpy array can then be passed to <code>corrcoef</code>:</p>
         <div class="code-area">
             <div class="code-container code-fixed">
                 <textarea id="code-cell-22">cols = 5
 
 # Select all rows and the first 5 column (excluding Smoker)
-patients_numpy_float = patients_numpy[:, :cols].astype(float)
+patients_numpy_float = patients_numpy[:, :cols]
 
-patients_corr = corrcoef(patients_numpy_float, rowvar=False)
-
-patients_corr</textarea>
+# Apply corrcoef column wise
+patients_corr = corrcoef(patients_numpy_float, rowvar=False)</textarea>
             </div>
             <div id="code-cell-22-output" class="output"></div>
         </div>
-        <p>The result is called the <strong>correlation matrix</strong>. It contains all the bivariate comparisons possible for the five chosen columns.<br><br>In the calculation above, we used the <strong>PCC</strong> in order to calculate the matrix. In general, any bivariate measure can be used to obtain a matrix of the same shape.</p>
+        <p>However, as our <em>DataFrame</em> previously had a column with <em>strings</em> the whole array type is <strong>mixed</strong>. We therefore need to amend this by ensuring the <em>type</em> of our numpy array is all <code>float</code> through the method <code>astype()</code>.</p>
+        <div class="info-box warning-box">
+            <div class="box-title">
+                <span class="box-icon"></span>
+                WARNING
+            </div>
+            <div class="box-content">
+                <p>Ensuring your downstream data is of the right type to be passed to an imported function is one of the most common errors encountered when working as a data scientist. Be on the look out for the above or variations of in your error reports.</p>
+            </div>
+        </div>
+        
+        <div class="code-area">
+            <div class="code-container code-fixed">
+                <textarea id="code-cell-23"># Select and ensure is float
+patients_numpy_float = patients_numpy[:, :cols].astype(float)</textarea>
+            </div>
+            <div id="code-cell-23-output" class="output"></div>
+        </div>
+        
+        <div class="code-area">
+            <div class="code-container code-fixed">
+                <textarea id="code-cell-24">patients_corr = corrcoef(patients_numpy_float, rowvar=False)
+
+patients_corr</textarea>
+            </div>
+            <div id="code-cell-24-output" class="output"></div>
+        </div>
+        <p>The above is called the <strong>correlation matrix</strong>. It contains all the <em>bivariate</em> comparisons possible for the five chosen columns.<br><br>Although we used the $PCC$ above, in general, any <em>bivariate</em> measure can be used to obtain a matrix of the same shape.</p>
                     </div>
                 </div>
             </div>
@@ -343,13 +377,13 @@ patients_corr</textarea>
                         <p>To get an illustration of the correlation pattern in a dataset, we can plot the correlation matrix as a heatmap.<br><br>Below are three lines of code, that make use of functionality within <code>Matplotlib</code>, to plot a heatmap of the correlation matrix from the &#x27;patients&#x27; dataset. We make use of the function <code>imshow</code>:</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-23">fig, ax = subplots(figsize=(5,5))
+                <textarea id="code-cell-25">fig, ax = subplots(figsize=(5,5))
 
 im = ax.imshow(patients_corr, cmap=&#x27;coolwarm&#x27;);
 
 show()</textarea>
             </div>
-            <div id="code-cell-23-output" class="output"></div>
+            <div id="code-cell-25-output" class="output"></div>
         </div>
         
         <div class="info-box note-box">
@@ -364,14 +398,14 @@ show()</textarea>
         <p>Let us add two more features to improve this figure.<br><br>Firstly, in order to highlight true correlations stand out (rather than the trivial self-correlations along the diagonal, which are always equal to 1) we can deliberately set the diagonal as being equal to 0. To achieve this, we use the NumPy function <code>fill_diagonal</code>.<br><br>Secondly, the <code>imshow</code> function, by default, will scale the colours to the minimum and maximum values present in the array. As such, we do not know what red or blue means. To see the colour bar, it can be added to the figure environment &#x27;fig&#x27; using <code>colorbar</code>.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-24">from numpy import fill_diagonal</textarea>
+                <textarea id="code-cell-26">from numpy import fill_diagonal</textarea>
             </div>
-            <div id="code-cell-24-output" class="output" style="display: none;"></div>
+            <div id="code-cell-26-output" class="output" style="display: none;"></div>
         </div>
         
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-25">fill_diagonal(patients_corr, 0)
+                <textarea id="code-cell-27">fill_diagonal(patients_corr, 0) # this works in place
 
 fig, ax = subplots(figsize=(7,7))
 
@@ -381,7 +415,7 @@ fig.colorbar(im, orientation=&#x27;horizontal&#x27;, shrink=0.7);
 
 show()</textarea>
             </div>
-            <div id="code-cell-25-output" class="output"></div>
+            <div id="code-cell-27-output" class="output"></div>
         </div>
         <p>The result is that the correlation between columns &#x27;Height&#x27; and &#x27;Weight&#x27; is the strongest, and presumably higher than would be expected if these two measures were independent. We can confirm this by plotting a scatter plot for these two columns, and refer to the scatter plot for columns 2 (Height) and 5 (Diastolic blood pressure):</p>
                     </div>
@@ -405,10 +439,10 @@ show()</textarea>
         
         <div class="code-area">
             <div class="code-container code-editor">
-                <textarea id="code-cell-26"></textarea>
+                <textarea id="code-cell-28"></textarea>
             </div>
-            <button id="run-code-cell-26" class="run-button">Run Code</button>
-            <div id="code-cell-26-output" class="output"></div>
+            <button id="run-code-cell-28" class="run-button">Run Code</button>
+            <div id="code-cell-28-output" class="output"></div>
         </div>
         
                     </div>
@@ -422,14 +456,14 @@ show()</textarea>
                         <p>To analyse the correlations in a dataset, we are only interested in the <strong>N x (N-1)/2</strong> unduplicated correlation coefficients. Here is a way to extract them and assign them to a variable.<br><br>Firstly, we must import the function <code>triu_indices</code>. It provides the indices of a matrix with specified size. The required size is obtained from our correlation matrix, using <code>len</code>. It is identical to the number of columns for which we calculated the <strong>CCs</strong>.<br><br>We also need to specify that we do not want the diagonal to be included. For this, there is an offset parameter &#x27;k&#x27;, which collects the indices excluding the diagonal, provided it is set to 1. (To include the indices of the diagonal, it would have to be set to 0).</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-27">from numpy import triu_indices</textarea>
+                <textarea id="code-cell-29">from numpy import triu_indices</textarea>
             </div>
-            <div id="code-cell-27-output" class="output" style="display: none;"></div>
+            <div id="code-cell-29-output" class="output" style="display: none;"></div>
         </div>
         
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-28"># Get the number of rows of the correlation matrix
+                <textarea id="code-cell-30"># Get the number of rows of the correlation matrix
 no_cols = len(patients_corr)
 
 # Get the indices of the 10 correlation coefficients for 5 data columns
@@ -440,12 +474,12 @@ corr_coeffs = patients_corr[corr_coeff_indices]
 
 print(corr_coeffs)</textarea>
             </div>
-            <div id="code-cell-28-output" class="output"></div>
+            <div id="code-cell-30-output" class="output"></div>
         </div>
         <p>Now we plot these correlation coefficients as a bar chart to see them one next to each other.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-29">fig, ax = subplots()
+                <textarea id="code-cell-31">fig, ax = subplots()
 
 bins = arange(len(corr_coeffs))
 
@@ -453,25 +487,39 @@ ax.bar(bins, corr_coeffs)
 
 show()</textarea>
             </div>
-            <div id="code-cell-29-output" class="output"></div>
+            <div id="code-cell-31-output" class="output"></div>
         </div>
-        <p>If there are a large number of coefficients, we can also display their histogram or boxplot as summary statistics.</p><h4>The Average Correlation per Column</h4><p>On a higher level, we can calculate the overall, or average correlation per data column. This can be achieved by averaging over either the rows or the columns of the correlation matrix. Because our similarity measure is undirected, both ways of summing yield the same result.<br><br>However, we need to consider whether the value is positive or negative. Correlation coefficients can be either positive or negative. As such, adding for instance +1 and -1 would yield an average of 0, even though both indicate perfect correlation and anti-correlation, respectively. This can be addressed by using the absolute value <code>abs</code>, and ignoring the sign.</p><p>In order to average, we can use the NumPy function: <code>mean</code>. This function defaults to averaging over all values of the matrix. In order to obtain the five values by averaging over the columns, we specify the &#x27;axis&#x27; keyword argument must be specified as 0.</p>
+        <p>If there are a large number of coefficients, we could also display their histogram or boxplot as summary statistics.</p><h4>The Average Correlation per Column</h4><p>On a higher level, we can calculate the overall, or average correlation per data column. This can be achieved by averaging over either the rows or the columns of the correlation matrix. Because our similarity measure is undirected, both ways of summing yield the same result.<br><br>However, we need to consider whether the value is positive or negative. Correlation coefficients can be either positive or negative. As such, adding for instance +1 and -1 would yield an average of 0, even though both indicate perfect correlation and anti-correlation, respectively. This can be addressed by using the absolute value <code>abs</code>, and ignoring the sign.</p><p>In order to average, we can use the NumPy function: <code>mean</code>. This function defaults to averaging over all values of the matrix. In order to obtain the five values by averaging over the columns, we specify the &#x27;axis&#x27; keyword argument must be specified as 0.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-30">from numpy import abs, mean</textarea>
+                <textarea id="code-cell-32">from numpy import abs, mean</textarea>
             </div>
-            <div id="code-cell-30-output" class="output" style="display: none;"></div>
+            <div id="code-cell-32-output" class="output" style="display: none;"></div>
         </div>
         
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-31"># Absolute values of correlation matrix
+                <textarea id="code-cell-33"># Absolute values of correlation matrix
 corr_matrix_abs = abs(patients_corr)
 
-# Average of the correlation strengths
+corr_matrix_abs</textarea>
+            </div>
+            <div id="code-cell-33-output" class="output"></div>
+        </div>
+        
+        <div class="code-area">
+            <div class="code-container code-fixed">
+                <textarea id="code-cell-34"># Average of the correlation strengths
 corr_column_average = mean(corr_matrix_abs, axis=0)
 
-fig, ax = subplots()
+corr_column_average</textarea>
+            </div>
+            <div id="code-cell-34-output" class="output"></div>
+        </div>
+        
+        <div class="code-area">
+            <div class="code-container code-fixed">
+                <textarea id="code-cell-35">fig, ax = subplots()
 
 bins = arange(corr_column_average.shape[0])
 
@@ -479,24 +527,24 @@ ax.bar(bins, corr_column_average );
 
 show()</textarea>
             </div>
-            <div id="code-cell-31-output" class="output"></div>
+            <div id="code-cell-35-output" class="output"></div>
         </div>
         
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-32">print(f&quot;Means per column: {corr_column_average}&quot;)</textarea>
+                <textarea id="code-cell-36">print(f&quot;Means per column: {corr_column_average}&quot;)</textarea>
             </div>
-            <div id="code-cell-32-output" class="output"></div>
+            <div id="code-cell-36-output" class="output"></div>
         </div>
         <h4>The Average Dataset Correlation</h4><p>The sum over rows or columns has given us a reduced set of values to look at. We can now take the final step and average over all correlation coefficients. This will yield the average correlation of the dataset. It condenses the full bivariate analysis into a single number, and can be a starting point when comparing different datasets of the same type, for example.</p>
         <div class="code-area">
             <div class="code-container code-fixed">
-                <textarea id="code-cell-33"># Average of the correlation strengths
+                <textarea id="code-cell-37"># Average of the correlation strengths
 corr_matrix_average = mean(corr_matrix_abs)
 
 print(&#x27;Average correlation strength: &#x27;, round(corr_matrix_average, 3))</textarea>
             </div>
-            <div id="code-cell-33-output" class="output"></div>
+            <div id="code-cell-37-output" class="output"></div>
         </div>
         
                     </div>
